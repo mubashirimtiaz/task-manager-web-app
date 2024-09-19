@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@nextui-org/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export interface PaginationComponentProps {
   total: number;
@@ -10,30 +10,25 @@ export default function PaginationComponent({
   total,
 }: PaginationComponentProps) {
   const searchParams = useSearchParams();
+  const path = usePathname();
   const router = useRouter();
 
   const page = searchParams.get('page') || '1';
 
   const handlePagination = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const sortBy = searchParams.get('sortBy') || '';
-    const order = searchParams.get('order') || '';
-    let query = '';
+    const searchParams = new URLSearchParams(window.location.search);
     const name = e.currentTarget.name;
-    if (page) {
-      if (name === 'previous') {
-        query += `?page=${parseInt(page) - 1}`;
-      } else {
-        query += `?page=${parseInt(page) + 1}`;
-      }
-    }
-    if (sortBy) {
-      query += `&sortBy=${sortBy}`;
+
+    if (name === 'previous') {
+      const value = parseInt(page) - 1;
+      searchParams.set('page', value.toString());
+    } else {
+      const value = parseInt(page) + 1;
+      searchParams.set('page', value.toString());
     }
 
-    if (order) {
-      query += `&order=${order}`;
-    }
-    router.push(`/tasks${query}`);
+    const query = searchParams.toString();
+    router.push(`${path}?${query}`);
   };
 
   return (

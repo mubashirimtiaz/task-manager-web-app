@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
 } from '@nextui-org/table';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { updateTaskArchiveStatus } from '@/actions/update-task';
 import FormButton from './form-button';
 
@@ -18,7 +18,28 @@ interface TableComponentProps {
 }
 
 export default function TableComponent({ tasks }: TableComponentProps) {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const path = usePathname();
+  const order = searchParams.get('order') || '';
+
+  const handleSorting = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (!searchParams.has('sortBy')) {
+      searchParams.set('sortBy', 'priority');
+    }
+    if (order === 'asc') {
+      searchParams.set('order', 'desc');
+    } else {
+      searchParams.set('order', 'asc');
+    }
+
+    const query = searchParams.toString();
+
+    router.push(`${path}?${query}`);
+  };
+
   const handleSelection = (e: React.MouseEvent<HTMLTableRowElement>) => {
     const taskId = e.currentTarget.dataset.taskId;
     if (taskId) {
@@ -30,7 +51,13 @@ export default function TableComponent({ tasks }: TableComponentProps) {
       <TableHeader>
         <TableColumn key={'ID'}>ID</TableColumn>
         <TableColumn key={'Title'}>Title</TableColumn>
-        <TableColumn key={'Priority'}>Priority</TableColumn>
+        <TableColumn
+          key={'Priority'}
+          onClick={handleSorting}
+          className='cursor-pointer'
+        >
+          Priority <span>{order === 'asc' ? '🔼' : '🔽'}</span>
+        </TableColumn>
         <TableColumn key={'Created at'}>Created at</TableColumn>
         <TableColumn key={'Action'}>Action</TableColumn>
       </TableHeader>

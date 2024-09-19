@@ -43,7 +43,7 @@ export async function updateTask(
   }
 
   try {
-    const response = await fetch(`http://localhost:8000/api/v1/tasks/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/v1/tasks/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export async function updateTaskArchiveStatus({
   archived: boolean;
 }) {
   try {
-    const response = await fetch(`http://localhost:8000/api/v1/tasks/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/v1/tasks/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

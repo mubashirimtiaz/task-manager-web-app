@@ -42,7 +42,7 @@ export async function createTask(
   }
 
   try {
-    const response = await fetch(`http://localhost:8000/api/v1/tasks`, {
+    const response = await fetch(`${process.env.API_URL}/v1/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

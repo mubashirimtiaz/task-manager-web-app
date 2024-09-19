@@ -2,7 +2,7 @@
 
 export async function getTaskById(id: string) {
   try {
-    const response = await fetch(`http://localhost:8000/api/v1/tasks/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/v1/tasks/${id}`, {
       cache: 'no-cache',
     });
 

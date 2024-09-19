@@ -2,7 +2,7 @@
 
 export async function getActiveTasks(query: string) {
   try {
-    const response = await fetch(`http://localhost:8000/api/v1/tasks${query}`);
+    const response = await fetch(`${process.env.API_URL}/v1/tasks${query}`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch tasks');
@@ -22,7 +22,7 @@ export async function getActiveTasks(query: string) {
 export async function getArchivedTasks(query: string) {
   try {
     const response = await fetch(
-      `http://localhost:8000/api/v1/tasks/archived${query}`
+      `${process.env.API_URL}/v1/tasks/archived${query}`
     );
 
     if (!response.ok) {
