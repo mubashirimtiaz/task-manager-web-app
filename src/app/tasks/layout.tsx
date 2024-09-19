@@ -6,9 +6,9 @@ interface TaskLayoutProps {
 
 export default function TaskLayout({ children }: TaskLayoutProps) {
   return (
-    <div className='px-3'>
+    <div>
       <NavbarComponent />
-      {children}
+      <div className='p-3'>{children}</div>
     </div>
   );
 }
