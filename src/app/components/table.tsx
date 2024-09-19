@@ -1,0 +1,70 @@
+'use client';
+import { Chip } from '@nextui-org/react';
+import { Task } from '../tasks/interface';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+} from '@nextui-org/table';
+import { useRouter } from 'next/navigation';
+import { updateTaskArchiveStatus } from '@/actions/update-task';
+import FormButton from './form-button';
+
+interface TableComponentProps {
+  tasks: Task[];
+}
+
+export default function TableComponent({ tasks }: TableComponentProps) {
+  const router = useRouter();
+  const handleSelection = (e: React.MouseEvent<HTMLTableRowElement>) => {
+    const taskId = e.currentTarget.dataset.taskId;
+    if (taskId) {
+      router.push(`/tasks/${taskId}`);
+    }
+  };
+  return (
+    <Table aria-label='Example static collection table'>
+      <TableHeader>
+        <TableColumn key={'ID'}>ID</TableColumn>
+        <TableColumn key={'Title'}>Title</TableColumn>
+        <TableColumn key={'Priority'}>Priority</TableColumn>
+        <TableColumn key={'Created at'}>Created at</TableColumn>
+        <TableColumn key={'Action'}>Action</TableColumn>
+      </TableHeader>
+      <TableBody>
+        {tasks.map((task) => (
+          <TableRow
+            key={task._id}
+            onClick={handleSelection}
+            data-task-id={`${task._id}`}
+            className='cursor-pointer hover:bg-gray-100'
+          >
+            <TableCell>{task._id}</TableCell>
+            <TableCell>{task.title}</TableCell>
+            <TableCell>
+              <Chip>{task.priority}</Chip>
+            </TableCell>
+            <TableCell>{new Date(task.createdAt).toDateString()}</TableCell>
+            <TableCell
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <form
+                action={updateTaskArchiveStatus.bind(null, {
+                  id: task._id,
+                  archived: !task.archived,
+                })}
+              >
+                <FormButton text={task.archived ? 'Unarchive' : 'Archive'} />
+              </form>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
