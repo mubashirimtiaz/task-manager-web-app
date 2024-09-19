@@ -28,7 +28,7 @@ export default async function ListArchiveTaskPage({
     query += `&order=${order}`;
   }
   return (
-    <div className='p-3'>
+    <div>
       <h1 className='text-2xl mb-3 text-foreground'>Archived Tasks</h1>
       <TableWrapperComponent fetchTasks={() => getArchivedTasks(query)} />;
     </div>

@@ -28,9 +28,9 @@ export default async function ListTaskPage({
     query += `&order=${order}`;
   }
   return (
-    <div className='p-3'>
+    <div>
       <h1 className='text-2xl mb-3 text-foreground'>All Tasks</h1>
-      <TableWrapperComponent fetchTasks={() => getActiveTasks(query)} />;
+      <TableWrapperComponent fetchTasks={() => getActiveTasks(query)} />
     </div>
   );
 }

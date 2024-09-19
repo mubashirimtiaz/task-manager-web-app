@@ -15,7 +15,7 @@ export default function NavbarComponent() {
           <p className='font-bold text-foreground'>Task Manager</p>
         </Link>
       </NavbarBrand>
-      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+      <NavbarContent className='sm:flex gap-3' justify='center'>
         <NavbarItem>
           <Link color='foreground' href='/tasks'>
             All
