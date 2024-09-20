@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const updateTaskSchema = z.object({
@@ -55,12 +55,18 @@ export async function updateTask(
       }),
     });
 
+    if (response.status === 404) {
+      notFound();
+    }
+
     if (!response.ok) {
       throw new Error('Failed to fetch tasks');
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      if (error.message !== 'NEXT_NOT_FOUND') {
+        throw error;
+      }
     } else {
       throw new Error('Failed to update task');
     }
@@ -89,6 +95,10 @@ export async function updateTaskArchiveStatus({
       }),
     });
 
+    if (response.status === 404) {
+      notFound();
+    }
+
     if (!response.ok) {
       throw new Error('Failed to fetch tasks');
     }
@@ -101,7 +111,9 @@ export async function updateTaskArchiveStatus({
     return tasks.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      if (error.message !== 'NEXT_NOT_FOUND') {
+        throw error;
+      }
     } else {
       throw new Error('Failed to update task');
     }
