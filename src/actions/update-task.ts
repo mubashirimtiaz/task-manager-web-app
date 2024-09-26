@@ -60,7 +60,7 @@ export async function updateTask(
     }
 
     if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+      throw new Error('Failed to update task');
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -100,7 +100,7 @@ export async function updateTaskArchiveStatus({
     }
 
     if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+      throw new Error('Failed to update task');
     }
 
     const tasks = await response.json();

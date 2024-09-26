@@ -1,6 +1,7 @@
 'use server';
 
 import { notFound } from 'next/navigation';
+import { ApiResponse } from './interface';
 
 export async function getTaskById(id: string) {
   try {
@@ -11,12 +12,11 @@ export async function getTaskById(id: string) {
     if (response.status === 404) {
       notFound();
     }
+    const tasks: ApiResponse = await response.json();
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+    if (tasks.error) {
+      throw new Error(tasks.message);
     }
-
-    const tasks = await response.json();
 
     return tasks.data;
   } catch (error: unknown) {

@@ -1,5 +1,7 @@
 'use server';
 
+import { ApiResponse } from './interface';
+
 export async function getActiveTasks(query: string) {
   try {
     const response = await fetch(
@@ -9,11 +11,12 @@ export async function getActiveTasks(query: string) {
       }
     );
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+    const tasks: ApiResponse = await response.json();
+
+    if (tasks.error) {
+      throw new Error(tasks.message);
     }
 
-    const tasks = await response.json();
     return tasks.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -33,11 +36,11 @@ export async function getArchivedTasks(query: string) {
       }
     );
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
-    }
+    const tasks: ApiResponse = await response.json();
 
-    const tasks = await response.json();
+    if (tasks.error) {
+      throw new Error(tasks.message);
+    }
     return tasks.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
