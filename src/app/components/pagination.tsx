@@ -31,13 +31,16 @@ export default function PaginationComponent({
     router.push(`${path}?${query}`);
   };
 
+  const lastPage = parseInt(page) === Math.ceil(total / 10);
+  const firstPage = page === '1';
+
   return (
     <div className='flex gap-3 mt-5 justify-end'>
       <Button
         name='previous'
         variant='solid'
-        color='primary'
-        disabled={page === '1'}
+        color={firstPage ? 'default' : 'primary'}
+        disabled={firstPage}
         onClick={handlePagination}
       >
         Previous
@@ -46,8 +49,8 @@ export default function PaginationComponent({
         name='next'
         type='submit'
         variant='solid'
-        color='primary'
-        disabled={parseInt(page) === Math.ceil(total / 10)}
+        color={lastPage ? 'default' : 'primary'}
+        disabled={lastPage}
         onClick={handlePagination}
       >
         Next
