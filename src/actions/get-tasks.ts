@@ -1,6 +1,13 @@
 'use server';
 
-import { ApiResponse } from './interface';
+import { Task } from '@/app/tasks/interface';
+
+interface ApiResponse {
+  data: { tasks: Task[]; total: number };
+  error?: boolean;
+  message: string;
+  statusCode: number;
+}
 
 export async function getActiveTasks(query: string) {
   try {

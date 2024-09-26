@@ -1,7 +1,14 @@
 'use server';
 
 import { notFound } from 'next/navigation';
-import { ApiResponse } from './interface';
+import { Task } from '@/app/tasks/interface';
+
+interface ApiResponse {
+  data: Task;
+  error?: boolean;
+  message: string;
+  statusCode: number;
+}
 
 export async function getTaskById(id: string) {
   try {
