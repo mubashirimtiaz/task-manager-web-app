@@ -1,6 +1,6 @@
 'use client';
 
-import { Input, Select, SelectItem, Textarea } from '@nextui-org/react';
+import { Chip, Input, Select, SelectItem, Textarea } from '@nextui-org/react';
 import FormButton from '../form-button';
 import { updateTask } from '@/actions/update-task';
 import { useFormState } from 'react-dom';
@@ -45,13 +45,25 @@ export default function UpdateTaskForm({ task }: FormProps) {
           errorMessage={formState.errors.priority?.join(', ')}
           defaultSelectedKeys={[priority]}
         >
-          <SelectItem key='low' value='low'>
+          <SelectItem
+            key='low'
+            value='low'
+            startContent={<Chip color='primary' className='rounded' />}
+          >
             Low
           </SelectItem>
-          <SelectItem key='medium' value='medium'>
+          <SelectItem
+            key='medium'
+            value='medium'
+            startContent={<Chip color='warning' className='rounded' />}
+          >
             Medium
           </SelectItem>
-          <SelectItem key='high' value='high'>
+          <SelectItem
+            key='high'
+            value='high'
+            startContent={<Chip color='danger' className='rounded' />}
+          >
             High
           </SelectItem>
         </Select>

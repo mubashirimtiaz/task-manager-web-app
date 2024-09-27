@@ -23,6 +23,19 @@ export default function TableComponent({ tasks }: TableComponentProps) {
   const path = usePathname();
   const order = searchParams.get('order') || '';
 
+  const selectColor = (priority: string) => {
+    switch (priority) {
+      case 'low':
+        return 'primary';
+      case 'medium':
+        return 'warning';
+      case 'high':
+        return 'danger';
+      default:
+        return 'default';
+    }
+  };
+
   const handleSorting = () => {
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -72,7 +85,7 @@ export default function TableComponent({ tasks }: TableComponentProps) {
             <TableCell>{task._id}</TableCell>
             <TableCell>{task.title}</TableCell>
             <TableCell>
-              <Chip>{task.priority}</Chip>
+              <Chip color={selectColor(task.priority)}>{task.priority}</Chip>
             </TableCell>
             <TableCell>{new Date(task.createdAt).toDateString()}</TableCell>
             <TableCell
