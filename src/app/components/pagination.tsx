@@ -35,7 +35,10 @@ export default function PaginationComponent({
   const firstPage = page === '1';
 
   return (
-    <div className='flex gap-3 mt-5 justify-end'>
+    <div className='flex gap-3 mt-5 justify-end items-center'>
+      <p className='font-semibold'>
+        page {page} of {Math.ceil(total / 10)}
+      </p>
       <Button
         name='previous'
         variant='solid'
