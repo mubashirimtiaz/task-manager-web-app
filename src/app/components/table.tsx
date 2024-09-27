@@ -62,7 +62,7 @@ export default function TableComponent({ tasks }: TableComponentProps) {
   return (
     <Table aria-label='Example static collection table'>
       <TableHeader>
-        <TableColumn key={'ID'}>ID</TableColumn>
+        {/* <TableColumn key={'ID'}>ID</TableColumn> */}
         <TableColumn key={'Title'}>Title</TableColumn>
         <TableColumn
           key={'Priority'}
@@ -82,7 +82,7 @@ export default function TableComponent({ tasks }: TableComponentProps) {
             data-task-id={`${task._id}`}
             className='cursor-pointer hover:bg-gray-100'
           >
-            <TableCell>{task._id}</TableCell>
+            {/* <TableCell>{task._id}</TableCell> */}
             <TableCell>{task.title}</TableCell>
             <TableCell>
               <Chip color={selectColor(task.priority)}>{task.priority}</Chip>
